@@ -37,3 +37,9 @@ unset X_ACCESS_TOKEN
 料金は返されたリソース数に基づきます。2026年10月時点の[X公式料金表](https://docs.x.com/x-api/getting-started/pricing)では、フォロー中一覧は通常1件$0.010、App所有者本人のOAuthトークンによるOwned Readなら1件$0.001、投稿読み取りは1件$0.005です。500アカウントと直近投稿500件が返る場合、単純計算ではApp-only Tokenで約$7.50、Owned Readで約$3.00です。展開された投稿の実際の請求額はDeveloper Consoleで確認してください。少額の利用上限を設定してから実行することを推奨します。
 
 このツールは `public_metrics.post_count` が0の場合だけ `no_posts` と判定します。直近投稿IDがあるのに投稿本体を取得できない場合は `unknown` です。APIがエラーや不完全なページを返した場合、CSVは生成しません。
+
+## `client-not-enrolled` が返る場合
+
+このエラーはBearer Tokenの文字列や `curl` の文法よりも、XFFChkアプリのAPI利用登録を確認する必要があることを示します。[X公式CLIのトラブルシューティング](https://github.com/xdevplatform/xurl#x-platform-enrollment-troubleshooting)では、[Developer Console](https://console.x.com/)で `Apps` → `Manage apps` → XFFChk → `Move to package` を開き、`Pay-per-use` パッケージと `Production` 環境に移すよう案内しています。エラー本文の「Project」は現行Consoleの操作名と異なる場合があります。
+
+設定後、XFFChkアプリから発行されたBearer Tokenで同じAPIを再試行してください。解決しなければアプリのパッケージと環境を再確認し、必要に応じてトークンを再生成します。Bearer TokenやConsumer Secretをエラー報告やスクリーンショットに含めないでください。
